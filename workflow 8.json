@@ -1,0 +1,143 @@
+{
+  "name": "workflow 8",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "id": "9a91722b-719f-400e-8710-4ab946a42f52",
+      "name": "Every Day at 9 AM",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "id-1",
+              "name": "apiUrl",
+              "value": "https://uselessfacts.jsph.pl/random.json",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "a80f3cef-9526-46c6-ab7e-5888e41da283",
+      "name": "Workflow Configuration",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        224,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Workflow Configuration').first().json.apiUrl }}",
+        "options": {}
+      },
+      "id": "f3d312b5-6cd8-4359-9d39-47a23d85ef88",
+      "name": "Fetch Random Fact",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        448,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "id-1",
+              "name": "fact",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            },
+            {
+              "id": "id-2",
+              "name": "retrieved_at",
+              "value": "={{ $now.toISO() }}",
+              "type": "string"
+            },
+            {
+              "id": "id-3",
+              "name": "source",
+              "value": "Random Facts API",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e0e75c7b-4a99-4d18-897d-e8130e487aff",
+      "name": "Format Output",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        672,
+        0
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Every Day at 9 AM": {
+      "main": [
+        [
+          {
+            "node": "Workflow Configuration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Configuration": {
+      "main": [
+        [
+          {
+            "node": "Fetch Random Fact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Random Fact": {
+      "main": [
+        [
+          {
+            "node": "Format Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "c5ce0fce-4ef6-4eac-97e4-cbf390281e6f",
+  "meta": {
+    "instanceId": "2fee5b8a598e20643677f24fbb8cf91b965756073467892bd36388e8d5429519"
+  },
+  "id": "zG43I8QiIUaBdQXK",
+  "tags": []
+}

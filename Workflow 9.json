@@ -1,0 +1,115 @@
+{
+  "name": "Workflow 9",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "id": "6195dde3-2e44-4604-b1f8-dc3bdc080cc1",
+      "name": "Every Day at 9 AM",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://uselessfacts.jsph.pl/api/v2/facts/random",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "a2937442-69f5-44b2-84ab-31e67c8feb94",
+      "name": "Get Random Fact",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        224,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "id-1",
+              "name": "dailyFact",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            },
+            {
+              "id": "id-2",
+              "name": "timestamp",
+              "value": "={{ $now.toISO() }}",
+              "type": "string"
+            },
+            {
+              "id": "id-3",
+              "name": "message",
+              "value": "Here is your daily random fact!",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "f1c3b72c-0f1c-4fda-be15-dc958e71f0e0",
+      "name": "Format Daily Message",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        448,
+        0
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Every Day at 9 AM": {
+      "main": [
+        [
+          {
+            "node": "Get Random Fact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Random Fact": {
+      "main": [
+        [
+          {
+            "node": "Format Daily Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "629f4fc8-f98a-48dd-b36e-befdad478fc8",
+  "meta": {
+    "instanceId": "2fee5b8a598e20643677f24fbb8cf91b965756073467892bd36388e8d5429519"
+  },
+  "id": "ObhKA5sxSVmniorC",
+  "tags": []
+}

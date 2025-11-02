@@ -1,0 +1,264 @@
+{
+  "name": "My workflow 5",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "40ef306d-74ed-4ea3-93e0-e6626716ae24",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "You are an expert Al research assistant. Your task is to search and identify two NEWly launched trending Al websites or tools that have gained significant attention on the internet in the last 48 hours.\n\nInstructions:\n\nweds it)\n\nResearch recent news, newsletters, social media content and trends, AI news YouTube channels, and technology resources to find the most talked-about or newly launched AT websites or tools from the past 48 hours.\n\nGive the output with following formatting:\n\nEach tool will start with '-->'\n\nEach of the fields will have key::value pairing, like 'Release-Date::12-Dec-2024 and so on. And let each field be separated by\n\nFor each, provide:\n\n-->Name:: Parakeet by Nvidia;;\n\nRelease-Date::July 7, 2025;;\n\nURL::https://nvidia.com/parakeet;;\n\nDescription::Nvidia's Parakeet is a newly launched AI platform focused on advanced speech and language generation.;;\n\nMain-Features::1. State-of-the-art speech synthesis\n\n2. Integration with Nvidia hardware\n\n3. Real-time language translation;;\n\nWhy-Trending::It has gained attention for its breakthrough performance and integration with Nvidia's hardware, making headlines in the Al community.\n\nweds it)\n\nPricing: $20 Monthly\n\nReference Video:\n\nhttps://www.youtube.com/watch?v=prw501r0oGY\n\nPlease do not include anything else in the output like \"here are the latest tools\" or so. Just the output in the format we asked\n\nspeech and language generation.;;\n\nMain-Features::1. State-of-the-art speech\n\nsynthesis\n\n2. Integration with Nvidia hardware\n\n3. Real-time language translation;;\n\nWhy-Trending:: It has gained attention for its breakthrough performance and integration with Nvidia's hardware, making headlines in the Al community.\n\nPricing: $20 Monthly\n\nReference Video:\n\nhttps://www.youtube.com/watch?v=prw501rDoGY\n\nPlease do not include anything else in the output like \"here are the latest tools\" or so. Just the output in the format we asked for. |\n\nPrompt properly",
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        224,
+        0
+      ],
+      "id": "6a3e2610-d514-44c9-b711-ebdbf77719b7",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        336,
+        144
+      ],
+      "id": "36539022-e4b4-4904-8094-aa86c4642d07",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "hgdWDNnnTe1wkUwH",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1DlfVhUQnsUtQpLaKxKGc_YsrEsBg6cgvYDf2KT6ScPs/edit?gid=0#gid=0",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1DlfVhUQnsUtQpLaKxKGc_YsrEsBg6cgvYDf2KT6ScPs/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $json.Name }}",
+            "Release Date": "={{ $json['Release-Date'] }}",
+            "Descrpition": "={{ $json.Description }}",
+            "Main feature": "={{ $json['Main-Features'] }}",
+            "Monthly price": "={{ $json.Pricing }}",
+            "Reference video": "={{ $json['Reference Video'] }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Release Date",
+              "displayName": "Release Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Descrpition",
+              "displayName": "Descrpition",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Main feature",
+              "displayName": "Main feature",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Monthly price",
+              "displayName": "Monthly price",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Reference video",
+              "displayName": "Reference video",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        944,
+        -16
+      ],
+      "id": "bcac1ea6-6395-4c9a-8edf-4406a218c1d5",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "jiSSdoEJhBsBTe3K",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "formatDate",
+        "date": "={{ $now }}",
+        "format": "custom",
+        "customFormat": "dd-MM-yyyy HH:mm",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dateTime",
+      "typeVersion": 2,
+      "position": [
+        608,
+        16
+      ],
+      "id": "a056f1c8-bb8c-4ded-a890-2f6cb68ae418",
+      "name": "Date & Time"
+    },
+    {
+      "parameters": {
+        "instructions": "text    Read the data text from basic LLM chain output and split the data into multiple records. Key::Value pair is formatted in this way.\nRemove any extra spaces added in tabular data. Each record starts with->",
+        "codeGeneratedForPrompt": "text    Read the data text from basic LLM chain output and split the data into multiple records. Key::Value pair is formatted in this way.\nRemove any extra spaces added in tabular data. Each record starts with->",
+        "jsCode": "const dataText = $(\"Basic LLM Chain\").all()[0]?.json?.text;\nconst records = dataText.split(\"-->\").filter((record) => record.trim() !== \"\");\nconst formattedRecords = records.map((record) => {\n  const keyValuePairs = record.split(\";;\").filter((pair) => pair.trim() !== \"\");\n  const recordObject = keyValuePairs.reduce((acc, pair) => {\n    const [key, value] = pair.split(\"::\").map((str) => str.trim());\n    acc[key] = value;\n    return acc;\n  }, {});\n  return { json: recordObject };\n});\nreturn formattedRecords;\n"
+      },
+      "type": "n8n-nodes-base.aiTransform",
+      "typeVersion": 1,
+      "position": [
+        816,
+        96
+      ],
+      "id": "eaae5544-0de4-4d93-a441-7d6ee54808fa",
+      "name": "AI Transform"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Date & Time",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        []
+      ]
+    },
+    "Date & Time": {
+      "main": [
+        [
+          {
+            "node": "AI Transform",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Transform": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "108be30c-1715-4a4a-b634-9c1f0872aaf8",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "2fee5b8a598e20643677f24fbb8cf91b965756073467892bd36388e8d5429519"
+  },
+  "id": "xyg2ZxP3u5CM6b1L",
+  "tags": []
+}

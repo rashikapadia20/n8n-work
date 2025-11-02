@@ -1,0 +1,159 @@
+{
+  "name": "My workflow 4",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "2d348ef8-e457-4644-8a58-acce460e3072",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Role:\nYou are an expert AI research assistant.\n\nTask:\nIdentify two newly launched and trending AI websites or tools that have gained significant attention on the internet in the last 48 hours.\n\nInstructions:\n\t•\tResearch recent AI news, newsletters, social media trends (Twitter/X, LinkedIn, Reddit), YouTube AI update channels, and tech resources.\n\t•\tFocus only on tools or websites launched or trending in the last 48 hours.\n\t•\tProvide short but informative descriptions explaining:\n\t•\tWhat the tool does\n\t•\tWhy it’s trending\n\t•\tKey features or use-cases",
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        224,
+        0
+      ],
+      "id": "8ea7faad-cf8b-417b-af92-cf78d5a97d7d",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        336,
+        144
+      ],
+      "id": "cca4d6e4-30c7-4d1c-8b64-de486fcd6308",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "hgdWDNnnTe1wkUwH",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1H1dFLTwew-8uD4QYauDexqZvAA5BoJ_xhlMskgWozTQ/edit?gid=0#gid=0",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1H1dFLTwew-8uD4QYauDexqZvAA5BoJ_xhlMskgWozTQ/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Date": "={{ $now }}",
+            "Tool details": "={{ $json.text }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Tool details",
+              "displayName": "Tool details",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        576,
+        16
+      ],
+      "id": "3f9f039d-0f3c-4dd4-8334-448507330687",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "jiSSdoEJhBsBTe3K",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1f2e085e-6a60-4e3d-93ff-db52b670c475",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "2fee5b8a598e20643677f24fbb8cf91b965756073467892bd36388e8d5429519"
+  },
+  "id": "qzU7x1OQKrZp9cqX",
+  "tags": []
+}

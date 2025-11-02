@@ -1,0 +1,121 @@
+{
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Join my fashion community",
+        "formDescription": "Fill out the form to join the growingcommunity of nocode devs.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Full Name",
+              "placeholder": "type your name",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Email",
+              "fieldType": "email",
+              "placeholder": "enter your email",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Your Number",
+              "fieldType": "number",
+              "placeholder": "enter your phone number",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "what is your current professional level",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Student"
+                  },
+                  {
+                    "option": "Business"
+                  },
+                  {
+                    "option": "Employee"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Your submitted infomation is right",
+              "fieldType": "checkbox",
+              "fieldOptions": {
+                "values": [
+                  {}
+                ]
+              },
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "c713159a-8434-4149-8fe0-3a81b8c79c34",
+      "name": "On form submission",
+      "webhookId": "cadf4e44-0fd6-4c90-bdbe-b3af576e4797"
+    },
+    {
+      "parameters": {
+        "sendTo": "abhishekthakur20021029@gmail.com",
+        "subject": "My Fashion Community",
+        "emailType": "text",
+        "message": "Join my community to get fashion update",
+        "options": {
+          "senderName": "Rashiii"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "4f876b4f-0a0d-47c2-8d78-cc0cfe0b616d",
+      "name": "Send a message",
+      "webhookId": "515ef1cb-3d59-49b3-9e52-2a1d7bd011fc",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "37IERkIYEIa0nUUv",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "5b18c7c5-3aa6-4d55-ae94-fb6cd8e5f061",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "2fee5b8a598e20643677f24fbb8cf91b965756073467892bd36388e8d5429519"
+  },
+  "id": "VrCvkAd4FpirQ3pt",
+  "tags": []
+}

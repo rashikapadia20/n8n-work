@@ -1,0 +1,93 @@
+{
+  "name": "My workflow 3",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1ZUpHufpZXUZzwm9ygaCrgov1abBPqleDy4nasqgj9oc/edit?gid=0#gid=0",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ZUpHufpZXUZzwm9ygaCrgov1abBPqleDy4nasqgj9oc/edit#gid=0"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "a0011c51-d356-4cfe-8110-b38524245d7f",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "bh1DtXnoUSQbRFbK",
+          "name": "Google Sheets Trigger account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "abhishekthakur20021029@gmail.com",
+        "subject": "Contact Details",
+        "emailType": "text",
+        "message": "hello give me your contact details",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "28d55d8f-3cf2-4563-8f54-fddceaee5552",
+      "name": "Send a message",
+      "webhookId": "b719b172-dedf-40b2-bcf9-dab32e7d5bd5",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "37IERkIYEIa0nUUv",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "919eedbb-b516-4c4d-8307-ab9129684cd8",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "2fee5b8a598e20643677f24fbb8cf91b965756073467892bd36388e8d5429519"
+  },
+  "id": "vvcAa6QHGp89Agvi",
+  "tags": []
+}

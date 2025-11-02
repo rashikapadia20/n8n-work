@@ -1,0 +1,67 @@
+{
+  "name": "My workflow 1",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -64,
+        -80
+      ],
+      "id": "5a02972e-08e1-41b2-a37f-e8cfd46304d4",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "sendTo": "abhishekthakur20021029@gmail.com",
+        "subject": "1st workflow ",
+        "emailType": "text",
+        "message": "hello this is my first automation flow \n\n\n\nregards,\nRashi",
+        "options": {
+          "senderName": "Rashi"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        144,
+        -80
+      ],
+      "id": "2b3ecf44-daa1-4e0f-8e04-ed54c6289261",
+      "name": "Send a message",
+      "webhookId": "492d87b7-b835-402d-a2f9-56306108ef87",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "37IERkIYEIa0nUUv",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "9fd45a8c-e21c-4916-903a-a78b4e98a788",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "2fee5b8a598e20643677f24fbb8cf91b965756073467892bd36388e8d5429519"
+  },
+  "id": "Y9vYoBgs8Y1uWR2q",
+  "tags": []
+}

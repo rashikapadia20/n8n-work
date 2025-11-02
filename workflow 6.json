@@ -1,0 +1,246 @@
+{
+  "name": "workflow 6",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "id": "2b372be2-87e6-4b05-95be-4466c5eb7e53",
+      "name": "Daily Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        1168,
+        80
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "id-1",
+              "name": "webhookUrl",
+              "value": "https://httpbin.org/post",
+              "type": "string"
+            },
+            {
+              "id": "id-2",
+              "name": "workflowName",
+              "value": "Daily Motivational Generator",
+              "type": "string"
+            },
+            {
+              "id": "id-3",
+              "name": "version",
+              "value": "1.0",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "c45c7c05-7fbf-48fe-8110-b7bce12f9bca",
+      "name": "Workflow Configuration",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1392,
+        80
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Array of motivational topics\nconst topics = [\n  'productivity',\n  'mindfulness',\n  'success',\n  'creativity',\n  'resilience',\n  'leadership',\n  'health',\n  'gratitude',\n  'innovation',\n  'courage'\n];\n\n// Generate random index\nconst randomIndex = Math.floor(Math.random() * topics.length);\n\n// Select random topic\nconst selectedTopic = topics[randomIndex];\n\n// Get current timestamp\nconst timestamp = new Date().toISOString();\n\n// Return the result\nreturn [\n  {\n    json: {\n      topic: selectedTopic,\n      timestamp: timestamp,\n      allTopics: topics\n    }\n  }\n];"
+      },
+      "id": "c84cca51-26f2-41bf-8f9f-77f0b3664271",
+      "name": "Generate Random Topic",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1616,
+        80
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get the random topic from the previous node\nconst topic = $input.first().json.topic;\nconst category = $input.first().json.category;\n\n// Define motivational content templates for each category\nconst contentTemplates = {\n  productivity: {\n    titles: [\n      \"Unlock Your Peak Performance\",\n      \"Master Your Time, Master Your Life\",\n      \"The Power of Focused Action\",\n      \"Productivity: Your Path to Success\"\n    ],\n    quotes: [\n      \"The secret of getting ahead is getting started. - Mark Twain\",\n      \"Productivity is never an accident. It is always the result of commitment to excellence. - Paul J. Meyer\",\n      \"Focus on being productive instead of busy. - Tim Ferriss\",\n      \"The key is not to prioritize what's on your schedule, but to schedule your priorities. - Stephen Covey\"\n    ],\n    tips: [\n      \"Break large tasks into smaller, manageable chunks and tackle them one at a time.\",\n      \"Use the Pomodoro Technique: work for 25 minutes, then take a 5-minute break.\",\n      \"Start your day by completing your most important task first.\",\n      \"Eliminate distractions by turning off notifications during focused work sessions.\"\n    ],\n    affirmations: [\n      \"I am focused, productive, and accomplish my goals with ease.\",\n      \"Every day, I make progress toward my dreams through consistent action.\",\n      \"I have the power to create the life I desire through my daily choices.\",\n      \"I am in control of my time and use it wisely to achieve my goals.\"\n    ]\n  },\n  wellness: {\n    titles: [\n      \"Nurture Your Mind, Body, and Soul\",\n      \"The Journey to Holistic Health\",\n      \"Wellness: Your Greatest Investment\",\n      \"Balance and Harmony in Daily Life\"\n    ],\n    quotes: [\n      \"Take care of your body. It's the only place you have to live. - Jim Rohn\",\n      \"Wellness is the complete integration of body, mind, and spirit. - Greg Anderson\",\n      \"The greatest wealth is health. - Virgil\",\n      \"Self-care is not selfish. You cannot serve from an empty vessel. - Eleanor Brown\"\n    ],\n    tips: [\n      \"Start each morning with 10 minutes of meditation or deep breathing exercises.\",\n      \"Stay hydrated by drinking at least 8 glasses of water throughout the day.\",\n      \"Take regular breaks to stretch and move your body, especially if you sit for long periods.\",\n      \"Prioritize 7-8 hours of quality sleep each night for optimal health and recovery.\"\n    ],\n    affirmations: [\n      \"I honor my body by making healthy choices that nourish and energize me.\",\n      \"I am worthy of taking time for self-care and personal wellness.\",\n      \"My mind is calm, my body is healthy, and my spirit is at peace.\",\n      \"I choose to live a balanced life that supports my overall well-being.\"\n    ]\n  },\n  growth: {\n    titles: [\n      \"Embrace the Journey of Self-Discovery\",\n      \"Continuous Growth: Your Superpower\",\n      \"Transform Through Learning\",\n      \"The Path to Personal Excellence\"\n    ],\n    quotes: [\n      \"The only way to do great work is to love what you do. - Steve Jobs\",\n      \"Growth is painful. Change is painful. But nothing is as painful as staying stuck somewhere you don't belong. - Mandy Hale\",\n      \"What you get by achieving your goals is not as important as what you become by achieving your goals. - Zig Ziglar\",\n      \"The capacity to learn is a gift; the ability to learn is a skill; the willingness to learn is a choice. - Brian Herbert\"\n    ],\n    tips: [\n      \"Read for at least 20 minutes daily to expand your knowledge and perspective.\",\n      \"Step outside your comfort zone regularly by trying new experiences.\",\n      \"Reflect on your day each evening and identify one lesson learned.\",\n      \"Seek feedback from mentors and peers to accelerate your personal development.\"\n    ],\n    affirmations: [\n      \"I am constantly evolving and becoming the best version of myself.\",\n      \"Every challenge I face is an opportunity for growth and learning.\",\n      \"I embrace change and trust in my ability to adapt and thrive.\",\n      \"I am committed to lifelong learning and personal development.\"\n    ]\n  },\n  success: {\n    titles: [\n      \"Define and Achieve Your Vision\",\n      \"Success: A Journey, Not a Destination\",\n      \"Build Your Empire of Achievement\",\n      \"The Mindset of Champions\"\n    ],\n    quotes: [\n      \"Success is not final, failure is not fatal: it is the courage to continue that counts. - Winston Churchill\",\n      \"Success is walking from failure to failure with no loss of enthusiasm. - Winston Churchill\",\n      \"The road to success and the road to failure are almost exactly the same. - Colin R. Davis\",\n      \"Success usually comes to those who are too busy to be looking for it. - Henry David Thoreau\"\n    ],\n    tips: [\n      \"Set clear, specific goals and create an action plan to achieve them.\",\n      \"Celebrate small wins along the way to maintain motivation and momentum.\",\n      \"Learn from failures and setbacks rather than being discouraged by them.\",\n      \"Surround yourself with successful, positive people who inspire and support you.\"\n    ],\n    affirmations: [\n      \"I am destined for success and attract opportunities that align with my goals.\",\n      \"I have everything I need within me to achieve extraordinary success.\",\n      \"My persistence and determination lead me to accomplish great things.\",\n      \"I am confident in my abilities and trust my journey to success.\"\n    ]\n  },\n  mindfulness: {\n    titles: [\n      \"Live in the Present Moment\",\n      \"The Art of Mindful Living\",\n      \"Find Peace in the Now\",\n      \"Awaken to the Present\"\n    ],\n    quotes: [\n      \"The present moment is the only time over which we have dominion. - Thích Nhất Hạnh\",\n      \"Mindfulness is a way of befriending ourselves and our experience. - Jon Kabat-Zinn\",\n      \"Wherever you are, be all there. - Jim Elliot\",\n      \"The best way to capture moments is to pay attention. This is how we cultivate mindfulness. - Jon Kabat-Zinn\"\n    ],\n    tips: [\n      \"Practice mindful breathing for 5 minutes when you feel stressed or overwhelmed.\",\n      \"Engage fully in one activity at a time instead of multitasking.\",\n      \"Notice your thoughts without judgment and gently return focus to the present.\",\n      \"Create a daily mindfulness ritual, such as mindful eating or walking.\"\n    ],\n    affirmations: [\n      \"I am fully present in this moment and embrace it with gratitude.\",\n      \"I release worry about the future and regret about the past.\",\n      \"I am aware, awake, and connected to the beauty of now.\",\n      \"Peace flows through me as I remain centered in the present moment.\"\n    ]\n  }\n};\n\n// Get random content for the selected category\nconst categoryContent = contentTemplates[category] || contentTemplates.productivity;\n\nconst randomIndex = (arr) => Math.floor(Math.random() * arr.length);\n\nconst motivationalContent = {\n  topic: topic,\n  category: category,\n  title: categoryContent.titles[randomIndex(categoryContent.titles)],\n  quote: categoryContent.quotes[randomIndex(categoryContent.quotes)],\n  tip: categoryContent.tips[randomIndex(categoryContent.tips)],\n  affirmation: categoryContent.affirmations[randomIndex(categoryContent.affirmations)],\n  generatedAt: new Date().toISOString()\n};\n\nreturn [{ json: motivationalContent }];"
+      },
+      "id": "b2cbf251-1ec9-4991-a91b-080629aba94c",
+      "name": "Create Motivational Content",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1840,
+        80
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "id-1",
+              "name": "status",
+              "value": "success",
+              "type": "string"
+            },
+            {
+              "id": "id-2",
+              "name": "generatedAt",
+              "value": "={{ $now.toISO() }}",
+              "type": "string"
+            },
+            {
+              "id": "id-3",
+              "name": "workflowId",
+              "value": "={{ $workflow.id }}",
+              "type": "string"
+            },
+            {
+              "id": "id-4",
+              "name": "executionId",
+              "value": "={{ $execution.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "6e1191d5-7b52-4c1a-aa34-15552f0ca7bc",
+      "name": "Format Output",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2064,
+        80
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Workflow Configuration').first().json.webhookUrl }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {}
+      },
+      "id": "38d34674-a709-4415-8718-b799010c68ae",
+      "name": "Post to Webhook",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        2288,
+        80
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Create success log entry with execution details\nconst timestamp = new Date().toISOString();\nconst previousNode = $input.all();\n\n// Extract data from previous nodes\nconst topic = $('Generate Random Topic').first().json.topic || 'Unknown';\nconst responseStatus = $('Post to Webhook').first().json.statusCode || 'Unknown';\n\n// Create log entry\nconst logEntry = {\n  status: 'success',\n  timestamp: timestamp,\n  executionId: $execution.id,\n  topic: topic,\n  responseStatus: responseStatus,\n  itemsProcessed: previousNode.length,\n  message: `Successfully executed workflow for topic: ${topic}`\n};\n\n// Log to console for debugging\nconsole.log('Execution Success:', logEntry);\n\n// Return summary object\nreturn [{\n  json: {\n    summary: {\n      executionStatus: 'completed',\n      timestamp: timestamp,\n      topic: topic,\n      webhookStatus: responseStatus,\n      details: logEntry\n    }\n  }\n}];"
+      },
+      "id": "e3067a32-2e3c-4b4b-8d3e-6a05c738632b",
+      "name": "Log Success",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2512,
+        80
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Daily Trigger": {
+      "main": [
+        [
+          {
+            "node": "Workflow Configuration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Configuration": {
+      "main": [
+        [
+          {
+            "node": "Generate Random Topic",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Random Topic": {
+      "main": [
+        [
+          {
+            "node": "Create Motivational Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Motivational Content": {
+      "main": [
+        [
+          {
+            "node": "Format Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Output": {
+      "main": [
+        [
+          {
+            "node": "Post to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Post to Webhook": {
+      "main": [
+        [
+          {
+            "node": "Log Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "8ebf036e-57f6-4364-9112-a408bb9fd238",
+  "meta": {
+    "instanceId": "2fee5b8a598e20643677f24fbb8cf91b965756073467892bd36388e8d5429519"
+  },
+  "id": "WxtTBoBBf5nKFimR",
+  "tags": []
+}
